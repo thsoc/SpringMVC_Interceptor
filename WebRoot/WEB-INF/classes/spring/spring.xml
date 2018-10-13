@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<context:component-scan base-package="com"></context:component-scan>
+	<!-- 访问静态资源配置 会在Spring MVC上下文中定义一个org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler，它会像一个检查员， 
+		对进入DispatcherServlet的URL进行筛查， 如果发现是静态资源的请求，就将该请求转由Web应用服务器默认的Servlet处理，如果不是静态资源的请求，才由DispatcherServlet继续处理。 
+		一般Web应用服务器默认的Servlet名称是"default"，因此DefaultServletHttpRequestHandler可以找到它。如果你所有的Web应用服务器的默认Servlet名称不是"default"， 
+		则需要通过default-servlet-name属性显示指定： <mvc:default-servlet-handler default-servlet-name="所使用的Web服务器默认使用的Servlet名称" 
+		/> -->
+	<mvc:default-servlet-handler />
+	<!-- <mvc:default-servlet-handler />将静态资源的处理经由Spring MVC框架交回Web应用服务器处理。而<mvc:resources 
+		/>更进一步，由Spring MVC框架自己处理静态资源，并添加一些有用的附加值功能。 首先，<mvc:resources />允许静态资源放在任何地方，如WEB-INF目录下、类路径下等， 
+		你甚至可以将JavaScript等静态文件打到JAR包中。通过location属性指定静态资源的位置，由于location属性是Resources类型，因此可以使用诸如"classpath:"等的资源前缀指定资源位置。 
+		传统Web容器的静态资源只能放在Web容器的根路径下，<mvc:resources />完全打破了这个限制。 其次，<mvc:resources 
+		/>依据当前著名的Page Speed、YSlow等浏览器优化原则对静态资源提供优化。 你可以通过cacheSeconds属性指定静态资源在浏览器端的缓存时间，一般可将该时间设置为一年，以充分利用浏览器端的缓存。在输出静态资源时， 
+		会根据配置设置好响应报文头的Expires 和 Cache-Control值。 在接收到静态资源的获取请求时，会检查请求头的Last-Modified值，如果静态资源没有发生变化，则直接返回303相应状态码，提示客户端使用浏览器缓存的数据， 
+		而非将静态资源的内容输出到客户端， 以充分节省带宽，提高程序性能。 -->
+	<!-- <mvc:resources location="/,classpath:/META-INF/publicResources/" mapping="/resources/**"/> -->
+	
+	
+	
+	
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<!-- 多个拦截器 -->
+		<mvc:interceptor>
+			<!-- /**表示所以的url包括子url路径 -->
+			<mvc:mapping path="/**"/>
+			<bean class="com.interceptor.HandlerInterceptorDemo1"></bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.interceptor.HandlerInterceptorDemo2"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+</beans>
