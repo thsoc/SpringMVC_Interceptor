@@ -54,5 +54,9 @@
 			<mvc:mapping path="/**"/>
 			<bean class="com.interceptor.HandlerInterceptorDemo2"></bean>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.interceptor.LoginInterceptor"></bean>
+		</mvc:interceptor>
 	</mvc:interceptors>
 </beans>
