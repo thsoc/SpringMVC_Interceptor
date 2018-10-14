@@ -46,7 +46,7 @@
 	<mvc:interceptors>
 		<!-- 多个拦截器 -->
 		<mvc:interceptor>
-			<!-- /**表示所以的url包括子url路径 -->
+			<!-- /**表示所有的url包括子url路径 -->
 			<mvc:mapping path="/**"/>
 			<bean class="com.interceptor.HandlerInterceptorDemo1"></bean>
 		</mvc:interceptor>
